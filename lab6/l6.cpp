@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 
 struct  Point
 {
@@ -14,38 +14,74 @@ public:
     virtual ~Control() {
 
     }
-        virtual void setPosition(Point m)=0 {
-          
-        }
-        virtual Point getPosition() = 0 {
-           
-        }
+    virtual void setPosition(Point m) = 0 {
+
+    }
+    virtual Point getPosition() = 0 {
+
+    }
 protected:
     Point m_m;
 };
 
 
 
-class Form: public Control {
+class Form : public Control {
 public:
-    Form() :Control() {
+     Form() :Control() {
         std::cout << "Form" << std::endl;
     }
     ~Form() {
 
     }
-   void setPosition(Point m) override {
-       m_m = m;
+    virtual void setPosition(Point m) override {
+        m_m = m;
     }
-  Point getPosition() override {
-      return m_m;
+    virtual Point getPosition() override {
+        return m_m;
     }
-    void addControl() {
+    virtual void addControl() {
         std::cout << "addContoll" << std::endl;
     }
 
-}; 
+};
 
+class WindowsForm : public Form {
+public:
+    WindowsForm() :Form() {
+        std::cout << "WindowsForm" << std::endl;
+    }
+    ~WindowsForm() {
+
+    }
+     void setPosition(Point m) override {
+        m_m = m;
+    }
+    Point getPosition() override {
+        return m_m;
+    }
+    void addControl() override {
+        std::cout << "addContoll" << std::endl;
+    }
+};
+class LinuxForm : public Form {
+public:
+    LinuxForm() :Form() {
+        std::cout << "LinuxForm" << std::endl;
+    }
+    ~LinuxForm() {
+
+    }
+    void setPosition(Point m) override {
+        m_m = m;
+    }
+    Point getPosition() override {
+        return m_m;
+    }
+    void addControl() override {
+        std::cout << "addContoll" << std::endl;
+    }
+};
 
 class Label : public Control {
 public:
@@ -56,17 +92,17 @@ public:
     ~Label() {
 
     }
-    void setPosition(Point m) override {
+    virtual void setPosition(Point m) override {
         m_m = m;
     }
-    Point getPosition() override {
+    virtual Point getPosition() override {
         return m_m;
     }
-    void setText(std::string t) {
+    virtual void setText(std::string t) {
         std::cout << "setText" << std::endl;
         m_t = t;
     }
-    std::string getText() {
+    virtual std::string getText() {
         return m_t;
     }
 protected:
@@ -74,32 +110,54 @@ protected:
 };
 
 
-class TextBox :public Control {
+class WindowsLabel : public Label {
 public:
-    TextBox():Control() {
-        std::cout << "Textbox" << std::endl;
-   }
-    ~TextBox()  {
-
+    WindowsLabel() :Label() {
+        std::cout << "WindowsLabel" << std::endl;
     }
 
+    ~WindowsLabel() {
+
+    }
     void setPosition(Point m) override {
         m_m = m;
     }
     Point getPosition() override {
         return m_m;
     }
-    void setText(std::string t) {
+    void setText(std::string t) override {
+        std::cout << "setText" << std::endl;
         m_t = t;
-   }
+    }
     std::string getText() {
         return m_t;
     }
-    void OnValueChanged() {
-        std::cout << "OnValueChanged" << std::endl;
+
+};
+
+class LinuxLabel : public Label {
+public:
+    LinuxLabel() :Label() {
+        std::cout << "LinuxLabel" << std::endl;
     }
-protected:
-    std::string m_t;
+
+    ~LinuxLabel() {
+
+    }
+    void setPosition(Point m) override {
+        m_m = m;
+    }
+    Point getPosition() override {
+        return m_m;
+    }
+    void setText(std::string t) override {
+        std::cout << "setText" << std::endl;
+        m_t = t;
+    }
+    std::string getText() {
+        return m_t;
+    }
+
 };
 
 
@@ -112,7 +170,6 @@ public:
 
     }
     virtual Label* createLabel() = 0;
-    virtual TextBox* createTextbox() = 0;
     virtual Form* createForm() = 0;
 };
 
@@ -127,14 +184,12 @@ public:
     ~WindowsConrolFactory() {
 
     }
-    Label *createLabel() override {
-        return new Label;
+    Label* createLabel() override {
+        return new WindowsLabel;
     }
-    TextBox * createTextbox() override {
-        return new TextBox;
-    }
-    Form *createForm() override {
-        return new Form;
+
+    Form* createForm() override {
+        return new WindowsForm;
     }
 };
 
@@ -142,19 +197,17 @@ public:
 class LinuxConrolFactory : public Factory {
 public:
     LinuxConrolFactory() :Factory() {
-        std::cout << "WindowsControlFactory" << std::endl;
+        std::cout << "LinuxControlFactory" << std::endl;
     }
     ~LinuxConrolFactory() {
 
     }
     Label* createLabel() override {
-        return new Label;
+        return new LinuxLabel;
     }
-    TextBox* createTextbox() override {
-        return new TextBox;
-    }
+ 
     Form* createForm() override {
-        return new Form;
+        return new LinuxForm;
     }
 };
 
@@ -162,10 +215,8 @@ int main()
 {
 
     Factory* factory = new WindowsConrolFactory;
-    TextBox* t = factory->createTextbox();
-    t->OnValueChanged();
     Factory* lFactory = new LinuxConrolFactory();
     Form* f = lFactory->createForm();
     f->addControl();
-    
+
 }
