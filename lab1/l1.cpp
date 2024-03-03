@@ -1,29 +1,25 @@
 ﻿#include <iostream>
 #include <math.h>
 
-double func(double x)
-{
-	return (sin (x)) * (sin (x));
-}
 
 class Integral {
 public:
-	
 
-	 Integral(double a, double b, double h  ) {
+
+	Integral(double a, double b, double h) {
 		m_a = a;// нижняя граница
 		m_b = b;// верхняя граница
 		m_h = h;//шаг интегрирования
 		m_n = (b - a) / h;//число разбиений
-	
-	}
-	
-	virtual void Comp() {
-          
-        }
-	 ~Integral() {
 
-	 }
+	}
+
+	virtual void Comp() {
+
+	}
+	~Integral() {
+
+	}
 
 
 protected:
@@ -32,15 +28,15 @@ protected:
 
 class Simpson : public Integral {
 public:
-	Simpson(double a, double b, double h):Integral(a,  b,  h) {
+	Simpson(double a, double b, double h) :Integral(a, b, h) {
 
 	}
 	~Simpson() {
 
 	}
-	
 
-	void Comp()  override{
+
+	void Comp(double (*func)(double))   {
 		double res;
 		res = m_h * (func(m_a) + func(m_b)) / 6.0;
 		for (int i = 1; i <= m_n; i++)
@@ -60,7 +56,7 @@ private:
 
 class Trapeze : public Integral {
 public:
-	Trapeze(double a, double b, double h):Integral(a, b, h) {
+	Trapeze(double a, double b, double h) :Integral(a, b, h) {
 
 	}
 	~Trapeze() {
@@ -68,7 +64,7 @@ public:
 	}
 
 
-	void Comp() override {
+	void Comp(double (*func)(double)){
 		double res;
 		res = m_h * (func(m_a) + func(m_b)) / 2.0;
 		for (int i = 1; i <= m_n - 1; i++)
@@ -83,20 +79,25 @@ private:
 };
 
 
+double func(double x)
+{
+	return (sin(x)) * (sin(x));
+}
+
 int main()
 {
 	setlocale(LC_ALL, "Russian");
-   
+
 	double a = 2;
 	double b = 6;
 	double h = 1;
 	Simpson Int(a, b, h);
-	Int.Comp();
-	std::cout <<"По формуле Симпсона: " << Int.Result() << std::endl << std::endl;
+	Int.Comp(&func);
+	std::cout << "По формуле Симпсона: " << Int.Result() << std::endl << std::endl;
 
 	Trapeze IntTwo(a, b, h);
-	IntTwo.Comp();
-	std::cout <<"По формуле трапеций: " << IntTwo.Result();
+	IntTwo.Comp(&func);
+	std::cout << "По формуле трапеций: " << IntTwo.Result();
 
 
 }
