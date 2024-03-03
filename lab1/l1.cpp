@@ -17,6 +17,10 @@ public:
 		m_n = (b - a) / h;//число разбиений
 	
 	}
+	
+	virtual void Comp() {
+          
+        }
 	 ~Integral() {
 
 	 }
@@ -36,7 +40,7 @@ public:
 	}
 	
 
-	void Comp() {
+	void Comp()  override{
 		double res;
 		res = m_h * (func(m_a) + func(m_b)) / 6.0;
 		for (int i = 1; i <= m_n; i++)
@@ -64,7 +68,7 @@ public:
 	}
 
 
-	void Comp() {
+	void Comp() override {
 		double res;
 		res = m_h * (func(m_a) + func(m_b)) / 2.0;
 		for (int i = 1; i <= m_n - 1; i++)
