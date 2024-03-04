@@ -17,7 +17,7 @@ public:
         if (IsAuthorized ()== 0) {
 
             m_user = user;
-          in>> m_user.id>>m_user.name>>...;
+          out>> m_user.id>>m_user.name>>...;
 
         }
         else if (user.login == m_user.login) {
