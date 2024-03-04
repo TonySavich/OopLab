@@ -14,10 +14,10 @@ class IUserManger {
 public:
     IUserManger();
     void SignIn(User user) {
-        if (m_authorized == 0) {
+        if (IsAuthorized ()== 0) {
 
             m_user = user;
-            m_authorized = 1;
+          in>> m_user.id>>m_user.name>>...;
 
         }
         else if (user.login == m_user.login) {
@@ -35,14 +35,19 @@ public:
 
     }
     void SignOut() {
-        m_authorized = 0;
+       close( m_authorized);
+        open(m_authorized);
     }
     bool IsAuthorized() {
-        return m_authorized;
+        int idd;
+        out >> idd;
+        if(idd ==m_user.id)
+        return True;
+        return false;
     }
 protected:
     User m_user;
-    bool m_authorized = 0;
+    std::string m_authorized = "";
 };
 
 
@@ -81,14 +86,14 @@ private:
     std::vector<T>  m_data;
 
 };
-IDataRepsoity<User> dataBase;
-
+//IDataRepsoity<User> dataBase;
 
 
 class FileManager {
 public:
-    FileManager() {
-
+    FileManager(std::string s) {
+m_database = s;
+        open (m_database);
     }
     void Create(std::string name, std::string login, std::string password) {
       
@@ -98,10 +103,13 @@ public:
         user.login = login;
         user.name = name;
         user.password = password;
-        dataBase.Add(user);
+     in <<User.id<<User.login<<User.name<<User.password<<std::endl;
     }
     void SignIn(User user) {
-        std::vector<User> data = dataBase.Get();
+        std::vector<User> data
+        for(int i=0; i<t;i++)
+        out >>data.id>>data.name>>...;
+        
         for (int i = 0; i < data.size(); i++) {
             if (user.login == data[i].login && user.name == data[i].name && user.password == data[i].password) {
                 ium.SignIn(user);
@@ -134,14 +142,14 @@ public:
 
 
 private:
-
+std::string m_database;
     IUserManger ium;
     int t = 0;
 };
 
 int main()
 {
-    FileManager file;
+    FileManager file("");
     std::string a, b, c;
     User us;
     std::cin >> a >> b >> c;
