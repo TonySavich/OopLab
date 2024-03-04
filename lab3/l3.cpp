@@ -1,6 +1,6 @@
-﻿#include <iostream>
+#include <iostream>
 
-const int N = 1000;
+const int N = 100;
 
 
 template <typename T>
@@ -30,124 +30,124 @@ public:
 
     int Element(int i, int j, int k) {
         return mas[i + j * m_i + k * m_i * m_j];
-}
-    
+    }
 
-    void GetValues0(int i) {
+
+    void GetValues0(int i, T dop[][N]) {
 
         for (int j = 0; j < m_j; j++) {
             for (int k = 0; k < m_k; k++) {
-                std::cout << mas[i + j * m_i + k * m_i * m_j] << " ";
-    
+               dop[j][k] =mas[i + j * m_i + k * m_i * m_j] ;
+
             }
-            std::cout << std::endl;;
+          //  std::cout << std::endl;;
         }
     }
 
-    void GetValues1(int j) {
+    void GetValues1(int j, T dop[][N]) {
 
         for (int i = 0; i < m_i; i++) {
             for (int k = 0; k < m_k; k++) {
-                std::cout << mas[i + j * m_i + k * m_i * m_j] << " ";
-   
+                dop[i][k] = mas[i + j * m_i + k * m_i * m_j];
+
             }
-            std::cout << std::endl;;
+         //   std::cout << std::endl;;
         }
     }
 
 
-    void GetValues2(int k) {
-  
+    void GetValues2(int k, T dop[][N]) {
+
         for (int i = 0; i < m_i; i++) {
             for (int j = 0; j < m_j; j++) {
-                std::cout << mas[i + j * m_i + k * m_i * m_j] << " ";
-               
+                dop[i][j]=mas[i + j * m_i + k * m_i * m_j] ;
+
             }
-            std::cout << std::endl;;
+          //  std::cout << std::endl;;
         }
     }
 
 
-    void GetValues01(int i, int j) {
- 
-            for (int k = 0; k < m_k; k++) {
-                std::cout << mas[i + j*m_i + k*m_i*m_j] << " ";
-         
-            }
-     
-    }
-
-    void GetValues02(int i, int k) {
-
-        for (int j = 0; j < m_j; j++) {
-            std::cout << mas[i + j * m_i + k * m_i * m_j] << " ";
-        
-        }
-
-    }
-
-    void GetValues12(int j, int k) {
-      
-        for (int i = 0; i < m_i; i++) {
-            std::cout << mas[i + j * m_i + k * m_i * m_j] << " ";
-
-        }
-
-    }
-
-
-
-
-
-    void SetValues0(int i) {
-        for (int j = 0; j < m_j; j++) {
-            for (int k = 0; k < m_k; k++) {
-                std::cin>> mas[i + j * m_i + k * m_i * m_j];
-            }
-        }
-    }
-
-    void SetValues1(int j) {
-        for (int i = 0; i < m_i; i++) {
-            for (int k = 0; k < m_k; k++) {
-                std::cin >> mas[i + j * m_i + k * m_i * m_j];
-            }
-        }
-    }
-
-
-    void SetValues2(int k) {
-        for (int i = 0; i < m_i; i++) {
-            for (int j = 0; j < m_j; j++) {
-                std::cin >> mas[i + j * m_i + k * m_i * m_j];
-            }
-        }
-    }
-
-
-    void SetValues01(int i, int j) {
+    void GetValues01(int i, int j ,T dop[N]) {
 
         for (int k = 0; k < m_k; k++) {
-            std::cin >> mas[i + j * m_i + k * m_i * m_j];
+           dop[k]= mas[i + j * m_i + k * m_i * m_j];
 
         }
 
     }
 
-
-    void SetValues02(int i, int k) {
+    void GetValues02(int i, int k, T dop[N]) {
 
         for (int j = 0; j < m_j; j++) {
-            std::cin >> mas[i + j * m_i + k * m_i * m_j];
+            dop[j]= mas[i + j * m_i + k * m_i * m_j];
 
         }
 
     }
 
-    void SetValues12(int j, int k) {
+    void GetValues12(int j, int k, T dop[N]) {
 
         for (int i = 0; i < m_i; i++) {
-            std::cin >> mas[i + j * m_i + k * m_i * m_j];
+            dop[i]=mas[i + j * m_i + k * m_i * m_j];
+
+        }
+
+    }
+
+
+
+
+
+    void SetValues0(int i, T dop[][N]) {
+        for (int j = 0; j < m_j; j++) {
+            for (int k = 0; k < m_k; k++) {
+               dop[j][j]=mas[i + j * m_i + k * m_i * m_j];
+            }
+        }
+    }
+
+    void SetValues1(int j, T dop[][N]) {
+        for (int i = 0; i < m_i; i++) {
+            for (int k = 0; k < m_k; k++) {
+                dop[i][k] = mas[i + j * m_i + k * m_i * m_j];
+            }
+        }
+    }
+
+
+    void SetValues2(int k, T dop[][N]) {
+        for (int i = 0; i < m_i; i++) {
+            for (int j = 0; j < m_j; j++) {
+                dop[i][j] = mas[i + j * m_i + k * m_i * m_j];
+            }
+        }
+    }
+
+
+    void SetValues01(int i, int j, T dop[N]) {
+
+        for (int k = 0; k < m_k; k++) {
+            dop[k]= mas[i + j * m_i + k * m_i * m_j];
+
+        }
+
+    }
+
+
+    void SetValues02(int i, int k, T dop[N]) {
+
+        for (int j = 0; j < m_j; j++) {
+           dop[j]= mas[i + j * m_i + k * m_i * m_j];
+
+        }
+
+    }
+
+    void SetValues12(int j, int k, T dop[N]) {
+
+        for (int i = 0; i < m_i; i++) {
+            dop[i] = mas[i + j * m_i + k * m_i * m_j];
 
         }
 
@@ -156,15 +156,21 @@ public:
 private:
     int m_i, m_j, m_k, m_t;
     T mas[N];
-    };
+};
 
 
-    int main()
-    {
-        Array3d<int> mas(2, 2, 2);
-        mas.SetAll();// 1 2 3 4 5 6 7 8
-        mas.GetValues12(1, 0);
+int main()
+{
+    Array3d<int> mas(2, 2, 2);
+    mas.SetAll();// 1 2 3 4 5 6 7 8
+    int maas[N][N];
+    mas.GetValues1(1, maas);
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+            std::cout << maas[i][j] << " ";
+        }
         std::cout << std::endl;
-        std::cout << mas.Element(1, 1, 1);
     }
+    std::cout << mas.Element(1, 1, 1);
+}
 
