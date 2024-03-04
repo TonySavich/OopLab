@@ -102,7 +102,7 @@ public:
     void SetValues0(int i, T dop[][N]) {
         for (int j = 0; j < m_j; j++) {
             for (int k = 0; k < m_k; k++) {
-               dop[j][j]=mas[i + j * m_i + k * m_i * m_j];
+               mas[i + j * m_i + k * m_i * m_j]= dop[j][k];
             }
         }
     }
@@ -110,7 +110,7 @@ public:
     void SetValues1(int j, T dop[][N]) {
         for (int i = 0; i < m_i; i++) {
             for (int k = 0; k < m_k; k++) {
-                dop[i][k] = mas[i + j * m_i + k * m_i * m_j];
+                mas[i + j * m_i + k * m_i * m_j] =dop[j][k];
             }
         }
     }
@@ -119,7 +119,7 @@ public:
     void SetValues2(int k, T dop[][N]) {
         for (int i = 0; i < m_i; i++) {
             for (int j = 0; j < m_j; j++) {
-                dop[i][j] = mas[i + j * m_i + k * m_i * m_j];
+                mas[i + j * m_i + k * m_i * m_j]= dop[j][j];
             }
         }
     }
@@ -128,7 +128,7 @@ public:
     void SetValues01(int i, int j, T dop[N]) {
 
         for (int k = 0; k < m_k; k++) {
-            dop[k]= mas[i + j * m_i + k * m_i * m_j];
+             mas[i + j * m_i + k * m_i * m_j]=dop[k] ;
 
         }
 
@@ -138,7 +138,7 @@ public:
     void SetValues02(int i, int k, T dop[N]) {
 
         for (int j = 0; j < m_j; j++) {
-           dop[j]= mas[i + j * m_i + k * m_i * m_j];
+           mas[i + j * m_i + k * m_i * m_j] =dop[j];
 
         }
 
@@ -147,7 +147,7 @@ public:
     void SetValues12(int j, int k, T dop[N]) {
 
         for (int i = 0; i < m_i; i++) {
-            dop[i] = mas[i + j * m_i + k * m_i * m_j];
+            mas[i + j * m_i + k * m_i * m_j]=dop[i];
 
         }
 
