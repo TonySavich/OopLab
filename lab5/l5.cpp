@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <vector>
 
 class User {
@@ -14,21 +14,22 @@ public:
     IUserManger();
     void SignIn(User user) {
         if (m_authorized == 0) {
-    
-                m_user = user;
-                m_authorized = 1;
-           
+
+            m_user = user;
+            m_authorized = 1;
+
         }
         else if (user.login == m_user.login) {
-            std::cout << "ok";
+           // std::cout << "ok";
         }
         else {
-            std::cout << "exit?(1.Yes  2.No)";
-            int tmpt;
-            std::cin >> tmpt;
-            if (tmpt == 1) {
+           // std::cout << "exit?(1.Yes  2.No)";
+           // int tmpt;
+            //std::cin >> tmpt;
+           // if (tmpt == 1) {
                 this->SignOut();
-            }
+                
+           // }
         }
 
     }
@@ -79,40 +80,17 @@ private:
     std::vector<T>  m_data;
 
 };
-
 IDataRepsoity<User> dataBase;
 
-class IUserRepository  {
 
-
-    User GetById(int id) {
-
-        std::vector<User>  data = dataBase.Get();
-        for (int i = 0; i < data.size(); i++) {
-            if (data[i].id == id)
-                return data[i];
-        }
-
-    }
-    User GetByName(std::string name) {
-        std::vector<User>  data = dataBase.Get();
-        for (int i = 0; i < data.size(); i++) {
-            if (data[i].name == name)
-                return data[i];
-        }
-    }
-};
 
 class FileManager {
 public:
     FileManager() {
 
     }
-    void Create() {
-        std::string name;
-        std::string login;
-        std::string password;
-        std::cin >> name >> login >> password;
+    void Create(std::string name, std::string login, std::string password) {
+      
         t++;
         User user;
         user.id = t;
@@ -134,25 +112,43 @@ public:
     void SignOut() {
         ium.SignOut();
     }
-    
+
 
     User GetById(int id) {
-        
-
+       
+        std::vector<User>  data = dataBase.Get();
+        for (int i = 0; i < data.size(); i++) {
+            if (data[i].id == id)
+                return data[i];
+        }
     }
     User GetByName(std::string name) {
-
+     
+        std::vector<User>data = dataBase.Get();
+        for (int i = 0; i < data.size(); i++) {
+            if (data[i].name == name)
+                return data[i];
+        }
     }
-    IUserRepository iur;
+
 
 private:
-    
+
     IUserManger ium;
     int t = 0;
 };
 
 int main()
 {
- 
+    FileManager file;
+    std::string a, b, c;
+    User us;
+    std::cin >> a >> b >> c;
+    file.Create(a, b, c);
+    us = file.GetByName(a);
+    std::cin >> a >> b >> c;
+    file.Create(a, b, c);
+    file.SignOut();
+    file.SignIn(us);
 
 }
